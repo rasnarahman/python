@@ -1,4 +1,4 @@
-# Method to valudate Integer
+# Method to validate Integer created by Rasna Rahman
 def validateInt(input):
     valid = True
     try:
@@ -8,12 +8,12 @@ def validateInt(input):
     return valid
 
 
-# Get price if not combo
+# Method to Get price if not combo. Arithmetic and logic operators are used in the function.
 def getBasePrice(coffeeCount, donutCount):
     return 1 * coffeeCount + 0.75 * donutCount
 
 
-# Get combo price
+# Method to Get combo price. Arithmetic and logic operators are used in the function.
 def getComboPrice(coffeeCount, donutCount):
     if donutCount > coffeeCount:
         price = (coffeeCount + donutCount) * 0.75
@@ -22,7 +22,7 @@ def getComboPrice(coffeeCount, donutCount):
     return price
 
 
-# Check if the order is combo
+# Method to check if the order is combo and logic operators are used in the function.
 def isCombo(coffeeCount, donutCount):
     isCombo = False
     if donutCount > 0 and coffeeCount > 0:
