@@ -1,7 +1,10 @@
+"""
+Author: Rasna Rahman
+Description: Test_Util.py contains all the unit tests for the Util.py
+"""
+
 import unittest
 import Util
-
-"""unittest is created by Rasna Rahman"""
 
 
 class TestUtil (unittest.TestCase):

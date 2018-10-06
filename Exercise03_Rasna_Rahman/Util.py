@@ -1,4 +1,9 @@
-# Method to validate Integer created by Rasna Rahman
+"""
+Author: Rasna Rahman
+Description: Util.py contains all the utility methods
+"""
+
+# Method to validate Integer
 def validateInt(input):
     valid = True
     try:
