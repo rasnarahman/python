@@ -12,8 +12,17 @@ class ReadDataSetFile:  # class ReadDataSetFile created
     def __init__(self):  # constructor
         self
 
+    def verifyCsvFile(self, filePath):
+        if ".csv" not in filePath:
+            return False
+        else:
+            return True
+
     def load_data(self, sortProperty):                    # method to read the .csv file and load 6 columns
         csv_file_path = askopenfilename()
+
+        if not self.verifyCsvFile(csv_file_path):
+            raise Exception("Not a valid CSV file!")
 
         tk = tkinter.Tk()
         self.close_button = Button(tk, text="Close", width=10, command=tk.destroy).pack(side=BOTTOM)  # Button to close the window
