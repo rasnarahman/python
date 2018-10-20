@@ -21,7 +21,12 @@ class ReadDataSetFile:  # class ReadDataSetFile created
         scrollbar.pack(side=RIGHT, fill=Y)
         tk.geometry("700x550")                          # size for the open window.
 
-        lb1 = Listbox(tk, yscrollcommand=scrollbar.set, width=100)  # created the list box to hold the data
+        lb1 = Listbox(tk, width=100)  # created the list box to hold the data
+
+        # attach listbox to scrollbar
+        lb1.config ( yscrollcommand=scrollbar.set )
+        scrollbar.config ( command=lb1.yview )
+
         i = 0
         try:                                                  # try catch block to handle the exceptions.
 
@@ -30,11 +35,13 @@ class ReadDataSetFile:  # class ReadDataSetFile created
 
                 print("Sort property: " + sortProperty)
                 if sortProperty == "REF_DATE":
-                    reader = sorted ( reader,key=lambda row: row[0],reverse=True )
+                    reader = sorted ( reader,key=lambda row: row[0])
                 elif sortProperty == "COMMODITY":
-                    reader = sorted ( reader,key=lambda row: row[4],reverse=True )
+                    reader = sorted ( reader,key=lambda row: row[4])
                 elif sortProperty == "VALUE":
-                    reader = sorted ( reader, key=lambda row: row[11], reverse=True )
+                    reader = sorted ( reader, key=lambda row: row[11])
+
+                #reader = sorted ( reader,key=lambda row: row[0],reverse=True )
 
                 for row in reader:
                     if i == 0: # Skip the first row and print title

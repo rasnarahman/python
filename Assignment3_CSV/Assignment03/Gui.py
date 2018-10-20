@@ -24,11 +24,6 @@ class DisplayDataSetGUI:        #created the DisplayDataSetGUI class
 
         fileReadLoadData = ReadDataSetFile.ReadDataSetFile()
         Button(frame, text='Open File', width=20, command=lambda: fileReadLoadData.load_data(v.get())).grid(row=3, column=0)   # Button to open the file
-        #Button (frame,text='Filter by Available Food ',width=10,command=lambda: fileReadLoadData.threadstarter('filter','Food available')).grid ( row=3,column=1)
-        #Button (frame,text='Food adjusted for losses',width=10,command=lambda: fileReadLoadData.threadstarter ( 'filter','Food available adjusted for losses' ) ).grid ( row=3,column=2)
-
-
-
 
         self.close_button = Button(frame, text="Exit", width=20, command=root.destroy)                 #close Button
         self.close_button.grid(row=4, column=0)
