@@ -38,7 +38,7 @@ class ReadDataSetFile:  # class ReadDataSetFile created
             raise exc
 
 
-    def load_data(self, sortProperty):                    # method to read the .csv file and load columns
+    def load_data(self, sortProperty, filterProperty):                    # method to read the .csv file and load columns
         csv_file_path = askopenfilename()
 
         if not self.verifyCsvFile(csv_file_path):         #varufication of the .csv file
@@ -62,6 +62,7 @@ class ReadDataSetFile:  # class ReadDataSetFile created
             with open(csv_file_path) as dataSet:
                 reader = csv.reader(dataSet, delimiter=',')
 
+
                 print("Sort property: " + sortProperty)          #if -else diicission structure for sorting the columns.
                 if sortProperty == "REF_DATE":
                     reader = sorted ( reader,key=lambda row: row[0])
@@ -69,6 +70,12 @@ class ReadDataSetFile:  # class ReadDataSetFile created
                     reader = sorted ( reader,key=lambda row: row[4])
                 elif sortProperty == "VALUE":
                     reader = sorted ( reader, key=lambda row: row[11])
+
+                print("Filter property: " + filterProperty)          #if -else diicission structure for sorting the columns.
+                if filterProperty == "AVAILABLE":
+                    reader = filter ( lambda p: 'Food available'==p[3],reader )
+                elif filterProperty == "ADUSTED_FOR_LOSSES":
+                    reader = filter ( lambda p: 'Food available adjusted for losses'==p[3],reader )
 
                 for row in reader:
                     if i == 0:                             # Skip the first row and print title

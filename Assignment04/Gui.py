@@ -16,7 +16,7 @@ class DisplayDataSetGUI:        #created the DisplayDataSetGUI class
         master.wm_title('Programming Language Research Project')
         frame = Frame(master)  # frame created
         frame.pack()
-        master.geometry("500x150")    # window size is set.
+        master.geometry("500x250")    # window size is set.
 
         v = tk.StringVar ()                            #String variable
         tk.Label ( root,text="""Select Sort Property:""").pack ()
@@ -24,8 +24,13 @@ class DisplayDataSetGUI:        #created the DisplayDataSetGUI class
         tk.Radiobutton ( root,text="COMMODITY",padx=200,variable=v,value="COMMODITY" ).pack ( anchor=tk.W )
         tk.Radiobutton ( root,text="VALUE",padx=200,variable=v,value="VALUE" ).pack ( anchor=tk.W )
 
+        f = tk.StringVar ()                            #String variable
+        tk.Label ( root,text="""Select Filter Property:""").pack ()
+        tk.Radiobutton ( root,text="Food available",padx=200,variable=f,value="AVAILABLE" ).pack ( anchor=tk.W)
+        tk.Radiobutton ( root,text="Food available adjusted for losses",padx=200,variable=f,value="ADUSTED_FOR_LOSSES" ).pack ( anchor=tk.W )
+
         fileReadLoadData = ReadDataSetFile.ReadDataSetFile()
-        Button(frame, text='Open File', width=20, command=lambda: fileReadLoadData.load_data(v.get())).grid(row=3, column=0)   # Button to open the file
+        Button(frame, text='Open File', width=20, command=lambda: fileReadLoadData.load_data(v.get(), f.get())).grid(row=3, column=0)   # Button to open the file
 
         self.close_button = Button(frame, text="Exit", width=20, command=root.destroy)                 #close Button
         self.close_button.grid(row=4, column=0)
