@@ -1,0 +1,13 @@
+DROP DATABASE assignment4;
+CREATE DATABASE assignment4;
+
+CREATE TABLE assignment4.food (
+  `REF_DATE` varchar(100) NOT NULL,
+  `COUNTRY` varchar(100) NOT NULL,
+  `COMMODITY` varchar(100) NOT NULL,
+  `VECTOR` varchar(100) NOT NULL,
+  `COORDINATE` varchar(100) NOT NULL,
+  `foodVALUE` varchar(100) NOT NULL,
+  `CATEGORIES` varchar(100) NOT NULL
+);
+
