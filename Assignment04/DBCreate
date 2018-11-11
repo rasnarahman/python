@@ -2,12 +2,23 @@ DROP DATABASE assignment4;
 CREATE DATABASE assignment4;
 
 CREATE TABLE assignment4.food (
-  `REF_DATE` varchar(100) NOT NULL,
-  `COUNTRY` varchar(100) NOT NULL,
-  `COMMODITY` varchar(100) NOT NULL,
-  `VECTOR` varchar(100) NOT NULL,
-  `COORDINATE` varchar(100) NOT NULL,
-  `foodVALUE` varchar(100) NOT NULL,
-  `CATEGORIES` varchar(100) NOT NULL
+   ID int NOT NULL AUTO_INCREMENT,
+  `REF_DATE` varchar(100) NULL,
+  `GEO` varchar(100) NULL,
+  `DGUID` varchar(100) NULL,
+  `FoodCategories` varchar(100) NULL,
+  `Commodity` varchar(100) NULL,
+  `UOM` varchar(100) NULL,
+  `UOM_ID` varchar(100) NULL,
+  `SCALAR_FACTOR` varchar(100) NULL,
+  `SCALAR_ID` varchar(100) NULL,
+  `VECTOR` varchar(100) NULL,
+  `COORDINATE` varchar(100) NULL,
+  `VALUE` varchar(100) NULL,
+  `STATUS` varchar(100) NULL,
+  `SYMBOLS` varchar(100) NULL,
+  `TERMINATED` varchar(100) NULL,
+  `DECIMALS` varchar(100) NULL,
+  PRIMARY KEY (ID)
 );
 

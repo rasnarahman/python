@@ -104,22 +104,22 @@ class ReadDataSetFile:  # class ReadDataSetFile created
         tree.heading ( 'DECIMALS',text="DECIMALS",anchor=W )
 
         tree.column ( '#0',stretch=NO,minwidth=0,width=0 )
-        tree.column ( '#1',stretch=NO,minwidth=0,width=200 )
-        tree.column ( '#2',stretch=NO,minwidth=0,width=200 )
-        tree.column ( '#3',stretch=NO,minwidth=0,width=300 )
-        tree.column ( '#4',stretch=NO,minwidth=0,width=200 )
+        tree.column ( '#1',stretch=NO,minwidth=0,width=70 )
+        tree.column ( '#2',stretch=NO,minwidth=0,width=70 )
+        tree.column ( '#3',stretch=NO,minwidth=0,width=100 )
+        tree.column ( '#4',stretch=NO,minwidth=0,width=100 )
         tree.column ( '#5',stretch=NO,minwidth=0,width=200 )
-        tree.column ( '#6',stretch=NO,minwidth=0,width=300 )
-        tree.column ( '#7',stretch=NO,minwidth=0,width=200 )
-        tree.column ( '#8',stretch=NO,minwidth=0,width=200 )
-        tree.column ( '#9',stretch=NO,minwidth=0,width=300 )
-        tree.column ( '#10',stretch=NO,minwidth=0,width=200 )
-        tree.column ( '#11',stretch=NO,minwidth=0,width=200 )
-        tree.column ( '#12',stretch=NO,minwidth=0,width=300 )
-        tree.column ( '#13',stretch=NO,minwidth=0,width=200 )
-        tree.column ( '#14',stretch=NO,minwidth=0,width=200 )
-        tree.column ( '#15',stretch=NO,minwidth=0,width=300 )
-        tree.column ( '#16',stretch=NO,minwidth=0,width=300 )
+        tree.column ( '#6',stretch=NO,minwidth=0,width=100 )
+        tree.column ( '#7',stretch=NO,minwidth=0,width=100 )
+        tree.column ( '#8',stretch=NO,minwidth=0,width=100 )
+        tree.column ( '#9',stretch=NO,minwidth=0,width=100 )
+        tree.column ( '#10',stretch=NO,minwidth=0,width=100 )
+        tree.column ( '#11',stretch=NO,minwidth=0,width=100 )
+        tree.column ( '#12',stretch=NO,minwidth=0,width=100 )
+        tree.column ( '#13',stretch=NO,minwidth=0,width=100 )
+        tree.column ( '#14',stretch=NO,minwidth=0,width=100 )
+        tree.column ( '#15',stretch=NO,minwidth=0,width=100 )
+        tree.column ( '#16',stretch=NO,minwidth=0,width=100 )
 
         tree.pack ()
 
@@ -172,7 +172,6 @@ class ReadDataSetFile:  # class ReadDataSetFile created
 
 
     def insert_data(self, csv_file_path):
-        tk = tkinter.Tk ()
         dbconnection = self.connect_db ()
         i = 0
         try:  # try catch block to handle the exceptions.
@@ -184,17 +183,27 @@ class ReadDataSetFile:  # class ReadDataSetFile created
 
                         i = i + 1
                         continue
-                    year = row[0]
-                    country = row[1]
+                    refDate = row[0]
+                    geo = row[1]
+                    dguid = row[2]
+                    foodCategories = row[3]
                     commodity = row[4]
+                    uom = row[5]
+                    uomId = row[6]
+                    scalarFactor = row[7]
+                    scalarId = row[8]
                     vector = row[9]
                     coordinate = row[10]
-                    categories = row[3]
                     value = row[11]
-                    query = "INSERT INTO food VALUES ( '" + year + "','" + country + "','" + commodity + "','" + vector + "','" + coordinate + "','" + categories + "','" + value + "')"
+                    status = row[12]
+                    symbols = row[13]
+                    terminated = row[14]
+                    decimals = row[15]
+
+                    query = "INSERT INTO assignment4.food (`REF_DATE`,`GEO`,`DGUID`,`FoodCategories`,`Commodity`,`UOM`,`UOM_ID`,`SCALAR_FACTOR`,`SCALAR_ID`,`VECTOR`,`COORDINATE`,`VALUE`,`STATUS`,`SYMBOLS`,`TERMINATED`,`DECIMALS`) VALUES ( '" + refDate + "','" +  geo + "','" + dguid + "','" +  foodCategories + "','" + commodity + "','" + uom + "','" + uomId + "','" + scalarFactor + "','" + scalarId + "','" + vector + "','" + coordinate + "','" + value + "','" + status + "','" + symbols + "','" + terminated + "','" + decimals + "')"
+                    #query = "INSERT INTO food (REF_DATE,GEO,DGUID,FoodCategories) VALUES ( '" + refDate + "','" + geo + "','" + dguid + "','" + foodCategories + "')"
                     self.mysql_insert_data ( dbconnection,query )
                     i = i + 1
-            tk.mainloop ()
             dataSet.close ()
         except IOError:  # exception handling
             print ( "could not open the file:" )
