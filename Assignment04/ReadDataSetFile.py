@@ -3,12 +3,15 @@
    Date: October 10, 2018
    this class opening the .csv file and loading it in a label. It has sorting option to print the columns sorted by 3 columns."""
 
-import pymysql
-import tkinter  # import the tkinter
 import csv  # import the csv
+import tkinter  # import the tkinter
 from tkinter import *
+import tkinter.ttk as ttk
+
 from tkinter.filedialog import askopenfilename  # import the method to open the file(Dialog Box)
+
 import pymysql
+
 
 class ReadDataSetFile:  # class ReadDataSetFile created
 
@@ -38,24 +41,87 @@ class ReadDataSetFile:  # class ReadDataSetFile created
             raise exc
 
 
-    def load_data(self, sortProperty, filterProperty):                    # method to read the .csv file and load columns
+    def load_data(self, sortProperty, filterProperty):      # method to read the .csv file and load columns
         csv_file_path = askopenfilename()
 
         if not self.verifyCsvFile(csv_file_path):         #varufication of the .csv file
             raise Exception("Not a valid CSV file!")
 
         tk = tkinter.Tk()
-        self.close_button = Button(tk, text="Close", width=10, command=tk.destroy).pack(side=BOTTOM)  # Button to close the window
+        tk.title("Python - Import CSV File To Tkinter Table")
+        width = 700
+        height = 600
+        screen_width = tk.winfo_screenwidth ()
+        screen_height = tk.winfo_screenheight ()
+        x = (screen_width / 2) - (width / 2)
+        y = (screen_height / 2) - (height / 2)
+        tk.geometry ( "%dx%d+%d+%d" % (width,height,x,y) )
+        tk.resizable ( 0,0 )
+        self.close_button = Button(tk, text="Close", width=10, command=tk.destroy).pack(side=BOTTOM)
         self.insert_button = Button ( tk,text="InsertToDB",width=10,command=lambda: self.insert_data(csv_file_path) ).pack ( side=BOTTOM )
-        scrollbar = Scrollbar(tk)                       # Scrollbar to scroll the data file
-        scrollbar.pack(side=RIGHT, fill=Y)
-        tk.geometry("700x550")                          # size for the open window.
 
-        lb1 = Listbox(tk, width=100)  # created the list box to hold the data
+        TableMargin = Frame ( tk,width=500 )
+        TableMargin.pack ( side=TOP )
+        scrollbarx = Scrollbar ( TableMargin,orient=HORIZONTAL )
+        scrollbary = Scrollbar ( TableMargin,orient=VERTICAL )
+        tree = ttk.Treeview ( TableMargin, height=400,selectmode="extended",yscrollcommand=scrollbary.set,xscrollcommand=scrollbarx.set,
+                              columns=("REF_DATE",
+                                       "GEO",
+                                       "DGUID",
+                                       "FoodCategories",
+                                       "Commodity",
+                                       "UOM",
+                                       "UOM_ID",
+                                       "SCALAR_FACTOR",
+                                       "SCALAR_ID",
+                                       "VECTOR",
+                                       "COORDINATE",
+                                       "VALUE",
+                                       "STATUS",
+                                       "SYMBOLS",
+                                       "TERMINATED",
+                                       "DECIMALS"))
+        scrollbary.config ( command=tree.yview )
+        scrollbary.pack ( side=RIGHT,fill=Y )
+        scrollbarx.config ( command=tree.xview )
+        scrollbarx.pack ( side=BOTTOM,fill=X )
 
-        # attach listbox to scrollbar
-        lb1.config ( yscrollcommand=scrollbar.set )
-        scrollbar.config ( command=lb1.yview )
+        tree.heading ( 'REF_DATE',text="REF_DATE",anchor=W )
+        tree.heading ( 'GEO',text="GEO",anchor=W )
+        tree.heading ( 'DGUID',text="DGUID",anchor=W )
+        tree.heading ( 'FoodCategories',text="FoodCategories",anchor=W )
+        tree.heading ( 'Commodity',text="Commodity",anchor=W )
+        tree.heading ( 'UOM',text="UOM",anchor=W )
+        tree.heading ( 'UOM_ID',text="UOM_ID",anchor=W )
+        tree.heading ( 'SCALAR_FACTOR',text="SCALAR_FACTOR",anchor=W )
+        tree.heading ( 'SCALAR_ID',text="SCALAR_ID",anchor=W )
+        tree.heading ( 'VECTOR',text="VECTOR",anchor=W )
+        tree.heading ( 'COORDINATE',text="COORDINATE",anchor=W )
+        tree.heading ( 'VALUE',text="VALUE",anchor=W )
+        tree.heading ( 'STATUS',text="STATUS",anchor=W )
+        tree.heading ( 'SYMBOLS',text="SYMBOLS",anchor=W )
+        tree.heading ( 'TERMINATED',text="TERMINATED",anchor=W )
+        tree.heading ( 'DECIMALS',text="DECIMALS",anchor=W )
+
+        tree.column ( '#0',stretch=NO,minwidth=0,width=0 )
+        tree.column ( '#1',stretch=NO,minwidth=0,width=200 )
+        tree.column ( '#2',stretch=NO,minwidth=0,width=200 )
+        tree.column ( '#3',stretch=NO,minwidth=0,width=300 )
+        tree.column ( '#4',stretch=NO,minwidth=0,width=200 )
+        tree.column ( '#5',stretch=NO,minwidth=0,width=200 )
+        tree.column ( '#6',stretch=NO,minwidth=0,width=300 )
+        tree.column ( '#7',stretch=NO,minwidth=0,width=200 )
+        tree.column ( '#8',stretch=NO,minwidth=0,width=200 )
+        tree.column ( '#9',stretch=NO,minwidth=0,width=300 )
+        tree.column ( '#10',stretch=NO,minwidth=0,width=200 )
+        tree.column ( '#11',stretch=NO,minwidth=0,width=200 )
+        tree.column ( '#12',stretch=NO,minwidth=0,width=300 )
+        tree.column ( '#13',stretch=NO,minwidth=0,width=200 )
+        tree.column ( '#14',stretch=NO,minwidth=0,width=200 )
+        tree.column ( '#15',stretch=NO,minwidth=0,width=300 )
+        tree.column ( '#16',stretch=NO,minwidth=0,width=300 )
+
+        tree.pack ()
 
         i = 0
         try:                                                  # try catch block to handle the exceptions.
@@ -78,23 +144,26 @@ class ReadDataSetFile:  # class ReadDataSetFile created
                     reader = filter ( lambda p: 'Food available adjusted for losses'==p[3],reader )
 
                 for row in reader:
-                    if i == 0:                             # Skip the first row and print title
-                        data = "YEAR  -  COUNTRY  -  COMMODITY  -  VECTOR  -  COORDINATE  -  VALUE  -  CATEGORIES "
-
-                        lb1.insert(i, data)
-                        i = i + 1
-                        continue
-                    year = row[0]
-                    country = row[1]
+                    refDate = row[0]
+                    geo = row[1]
+                    dguid = row[2]
+                    foodCategories = row[3]
                     commodity = row[4]
+                    uom = row[5]
+                    uomId = row[6]
+                    scalarFactor = row[7]
+                    scalarId = row[8]
                     vector = row[9]
                     coordinate = row[10]
-                    categories = row[3]
                     value = row[11]
-                    data = year + " - " + country + " - " + commodity + " - " + vector + " - " + coordinate + " - " + value+" - "+ categories
-                    lb1.insert(i, data)   # print the rows
-                    i = i + 1
-                lb1.pack(side=LEFT, fill=BOTH)
+                    status = row[12]
+                    symbols = row[13]
+                    terminated = row[14]
+                    decimals = row[15]
+
+                    tree.insert ( "",0,values=(refDate,geo,dguid,foodCategories,commodity,uom,uomId,scalarFactor,scalarId,
+                                          vector,coordinate,value,status,symbols,terminated,decimals))
+
             tk.mainloop()
             dataSet.close()
         except IOError:                               # exception handling
